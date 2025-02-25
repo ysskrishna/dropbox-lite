@@ -1,13 +1,16 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import Link from "next/link"
 import { format } from "date-fns"
-import { Download, File, Loader2 } from "lucide-react"
+import {
+  Download,
+  Loader2
+} from "lucide-react"
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import config from '@/common/config';
+import { getFileIcon } from "@/common/fileutils"
 
 interface FileItem {
   id: number
@@ -109,7 +112,7 @@ export function FileList() {
             <TableRow key={file.id}>
               <TableCell className="font-medium">
                 <div className="flex items-center gap-2">
-                  <File className="h-4 w-4" />
+                  {getFileIcon(file.name)}
                   {file.name}
                 </div>
               </TableCell>

@@ -11,14 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useToast } from "@/components/ui/use-toast"
 import config from '@/common/config';
-const ALLOWED_FILE_TYPES = ["text/plain", "image/jpeg", "image/png", "application/json"]
-
-const FILE_TYPE_MAP: { [key: string]: string } = {
-  "text/plain": ".txt",
-  "image/jpeg": ".jpg",
-  "image/png": ".png",
-  "application/json": ".json",
-}
+import { ALLOWED_FILE_TYPES, FILE_TYPE_MAP } from "@/common/fileutils";
 
 export function UploadButton() {
   const [open, setOpen] = useState(false)
@@ -28,6 +21,7 @@ export function UploadButton() {
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
+    console.log("file.type", file.type);
 
     if (!ALLOWED_FILE_TYPES.includes(file.type)) {
       toast({
