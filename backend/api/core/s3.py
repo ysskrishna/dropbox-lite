@@ -4,6 +4,7 @@ from botocore.exceptions import ClientError
 from typing import BinaryIO
 import asyncio
 from functools import partial
+import io
 
 class S3Client:
     def __init__(self):
@@ -40,4 +41,20 @@ class S3Client:
         )
         
         return object_name
+
+    async def download_fileobj(self, object_name: str) -> bytes:
+        buffer = io.BytesIO()
+        
+        # Run the blocking S3 download in a thread pool
+        await asyncio.get_event_loop().run_in_executor(
+            None,
+            partial(
+                self.client.download_fileobj,
+                self.bucket_name,
+                object_name,
+                buffer
+            )
+        )
+        
+        return buffer.getvalue()
 
