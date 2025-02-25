@@ -11,4 +11,3 @@ class Config(object):
     AWS_REGION = os.getenv('AWS_REGION')
     AWS_S3_BUCKET_NAME = os.getenv('AWS_S3_BUCKET_NAME')
     AWS_S3_ENDPOINT_URL = os.getenv('AWS_S3_ENDPOINT_URL')
-    AWS_S3_PUBLIC_ENDPOINT_URL = os.getenv('AWS_S3_PUBLIC_ENDPOINT_URL')

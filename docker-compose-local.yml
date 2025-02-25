@@ -18,24 +18,3 @@ services:
       interval: 30s
       timeout: 20s
       retries: 3
-  
-  backend:
-    build:
-      context: ./backend 
-      dockerfile: api/Dockerfile
-    env_file:
-      - ./backend/api/.env
-    ports:
-      - "8000:8000"
-    depends_on:
-      - storage
-
-  frontend:
-    build:
-      context: ./frontend
-    environment:
-      - NEXT_PUBLIC_API_BASE_URL=http://backend:8000
-    ports:
-      - "3000:3000"
-    depends_on:
-      - backend
