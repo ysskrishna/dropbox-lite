@@ -1,11 +1,5 @@
-import {
-  File,
-  FileImage,
-  FileText,
-  FileVideo,
-  FileAudio,
-  FileSpreadsheet,
-} from "lucide-react"
+import {getClassWithColor} from 'file-icons-js';
+import { File } from "lucide-react"
 
 export const ALLOWED_FILE_TYPES = ["text/plain", "image/jpeg", "image/png", "application/json", "application/pdf", "application/msword", "audio/mpeg", "video/mp4"]
 
@@ -23,43 +17,20 @@ export const FILE_TYPE_MAP: { [key: string]: string } = {
   
   // Audio
   "audio/mpeg": ".mp3",
-
+  
   // Video
   "video/mp4": ".mp4"
 }
 
 export const getFileIcon = (filename: string) => {
-  const extension = filename.split('.').pop()?.toLowerCase() || '';
+  const iconClass = getClassWithColor(filename);
   
-  // Image files
-  if (['jpg', 'jpeg', 'png'].includes(extension)) {
-    return <FileImage className="h-4 w-4" />;
+  if (iconClass) {
+    return (
+      <i className={iconClass} />
+    );
   }
   
-  // Document files
-  if (['doc'].includes(extension)) {
-    return <FileText className="h-4 w-4" />;
-  }
-  
-  // Spreadsheet files
-  if (['csv'].includes(extension)) {
-    return <FileSpreadsheet className="h-4 w-4" />;
-  }
-  
-  // PDF files
-  if (['pdf'].includes(extension)) {
-    return <File className="h-4 w-4" />;
-  }
-  
-  // Video files
-  if (['mp4'].includes(extension)) {
-    return <FileVideo className="h-4 w-4" />;
-  }
-  
-  // Audio files
-  if (['mp3'].includes(extension)) {
-    return <FileAudio className="h-4 w-4" />;
-  }
-  // Default file icon
+  // Fallback to default file icon if no matching icon is found
   return <File className="h-4 w-4" />;
 };
