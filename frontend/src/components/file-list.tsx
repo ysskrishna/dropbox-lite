@@ -21,6 +21,8 @@ export function FileList() {
   const [files, setFiles] = useState<FileItem[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
+  const [sortField, setSortField] = useState<'name' | 'created_at'>('created_at')
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc')
 
   useEffect(() => {
     fetchFiles()
@@ -31,12 +33,29 @@ export function FileList() {
       const response = await fetch(`${config.baseUrl}/api/file/list`)
       if (!response.ok) throw new Error("Failed to fetch files")
       const data = await response.json()
-      setFiles(data)
+      setFiles(sortFiles(data, sortField, sortDirection))
     } catch (err) {
       setError("Failed to load files. Please try again later.")
     } finally {
       setLoading(false)
     }
+  }
+
+  const sortFiles = (files: FileItem[], field: 'name' | 'created_at', direction: 'asc' | 'desc') => {
+    return [...files].sort((a, b) => {
+      const aValue = field === 'name' ? a[field].toLowerCase() : new Date(a[field] + 'Z').getTime()
+      const bValue = field === 'name' ? b[field].toLowerCase() : new Date(b[field] + 'Z').getTime()
+      return direction === 'asc' 
+        ? aValue > bValue ? 1 : -1
+        : aValue > bValue ? -1 : 1
+    })
+  }
+
+  const handleSort = (field: 'name' | 'created_at') => {
+    const newDirection = field === sortField && sortDirection === 'asc' ? 'desc' : 'asc'
+    setSortField(field)
+    setSortDirection(newDirection)
+    setFiles(sortFiles(files, field, newDirection))
   }
 
   if (loading) {
@@ -60,8 +79,28 @@ export function FileList() {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead className="hidden md:table-cell">Date</TableHead>
+            <TableHead>
+              <button
+                onClick={() => handleSort('name')}
+                className="flex items-center hover:text-gray-700"
+              >
+                Name
+                {sortField === 'name' && (
+                  <span className="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
+                )}
+              </button>
+            </TableHead>
+            <TableHead className="hidden md:table-cell">
+              <button
+                onClick={() => handleSort('created_at')}
+                className="flex items-center hover:text-gray-700"
+              >
+                Date
+                {sortField === 'created_at' && (
+                  <span className="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
+                )}
+              </button>
+            </TableHead>
             <TableHead className="text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
@@ -74,7 +113,9 @@ export function FileList() {
                   {file.name}
                 </div>
               </TableCell>
-              <TableCell className="hidden md:table-cell">{format(new Date(file.created_at), "PPP")}</TableCell>
+              <TableCell className="hidden md:table-cell">
+                {format(new Date(file.created_at + 'Z'), "PPP p")}
+              </TableCell>
               <TableCell className="text-right">
                 <div className="flex justify-end gap-2">
                   <a href={`/api/file/download/${file.id}`} download>

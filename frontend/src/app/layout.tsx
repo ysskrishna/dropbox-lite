@@ -9,6 +9,25 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "Dropbox Lite",
   description: "A simple file storage system",
+  keywords: [
+    "file storage",
+    "file sharing",
+    "file upload",
+    "file download",
+    "file management",
+    "file storage system",
+    "cloud storage",
+    "ysskrishna",
+    "dropbox",
+    "dropbox lite"
+  ],
+  authors: [
+    {
+      name: "Y. Siva Sai Krishna",
+      url: "https://github.com/ysskrishna",
+    },
+  ],
+  creator: "Y. Siva Sai Krishna",
   icons: {
     icon: "/favicon.ico",
   },
@@ -16,9 +35,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode
-}) {
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="en">
       <body className={inter.className}>
