@@ -10,7 +10,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useToast } from "@/components/ui/use-toast"
-
+import config from '@/common/config';
 const ALLOWED_FILE_TYPES = ["text/plain", "image/jpeg", "image/png", "application/json"]
 
 const FILE_TYPE_MAP: { [key: string]: string } = {
@@ -44,7 +44,7 @@ export function UploadButton() {
       const formData = new FormData()
       formData.append("file", file)
 
-      const response = await fetch("/api/file/upload", {
+      const response = await fetch(`${config.baseUrl}/api/file/upload`, {
         method: "POST",
         body: formData,
       })

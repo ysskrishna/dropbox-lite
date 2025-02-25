@@ -7,6 +7,7 @@ import { Download, File, Loader2 } from "lucide-react"
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
+import config from '@/common/config';
 
 interface FileItem {
   id: number
@@ -27,7 +28,7 @@ export function FileList() {
 
   const fetchFiles = async () => {
     try {
-      const response = await fetch("/api/file/list")
+      const response = await fetch(`${config.baseUrl}/api/file/list`)
       if (!response.ok) throw new Error("Failed to fetch files")
       const data = await response.json()
       setFiles(data)
@@ -76,11 +77,6 @@ export function FileList() {
               <TableCell className="hidden md:table-cell">{format(new Date(file.created_at), "PPP")}</TableCell>
               <TableCell className="text-right">
                 <div className="flex justify-end gap-2">
-                  <Link href={`/files/${file.id}`}>
-                    <Button variant="ghost" size="sm">
-                      View
-                    </Button>
-                  </Link>
                   <a href={`/api/file/download/${file.id}`} download>
                     <Button variant="ghost" size="sm">
                       <Download className="h-4 w-4" />
