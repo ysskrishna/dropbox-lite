@@ -1,8 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from routers.file import router as file_router
 
 app = FastAPI()
 
+app.include_router(file_router, prefix="/api/file", tags=["file"])
 
 app.add_middleware(
     CORSMiddleware,
