@@ -1,10 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers.file import router as file_router
+from core.dbutils import init_db
 
 app = FastAPI()
-
-app.include_router(file_router, prefix="/api/file", tags=["file"])
 
 app.add_middleware(
     CORSMiddleware,
@@ -14,6 +13,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.on_event("startup")
+async def startup_event():
+    await init_db()
+
+app.include_router(file_router, prefix="/api/file", tags=["file"])
 
 @app.get("/health")
 async def health_check():
