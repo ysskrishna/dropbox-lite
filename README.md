@@ -26,6 +26,10 @@ Dropbox-Lite is a modern, lightweight file storage and sharing solution that pro
 
 ## Media
 
+
+https://github.com/user-attachments/assets/eadd4939-bbab-45e4-9b6a-960f772894f1
+
+
 <video width="320" height="240" controls>
   <source src="./media/dropbox_lite_demo.mp4" type="video/mp4">
 </video>
