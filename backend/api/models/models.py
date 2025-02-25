@@ -16,4 +16,5 @@ class File(Timestamp, Base):
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     path = Column(String, nullable=False)
+    content_type = Column(String, nullable=True)
 

@@ -21,7 +21,6 @@ export function UploadButton() {
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
-    console.log("file.type", file.type);
 
     if (!ALLOWED_FILE_TYPES.includes(file.type)) {
       toast({

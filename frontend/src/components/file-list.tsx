@@ -24,6 +24,7 @@ export function FileList() {
   const [files, setFiles] = useState<FileItem[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
+  const [downloading, setDownloading] = useState<number | null>(null)
   const [sortField, setSortField] = useState<'name' | 'created_at'>('created_at')
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc')
 
@@ -59,6 +60,28 @@ export function FileList() {
     setSortField(field)
     setSortDirection(newDirection)
     setFiles(sortFiles(files, field, newDirection))
+  }
+
+  const handleDownload = async (fileId: number, fileName: string) => {
+    try {
+      setDownloading(fileId)
+      const response = await fetch(`${config.baseUrl}/api/file/download/${fileId}`)
+      if (!response.ok) throw new Error('Download failed')
+      
+      const blob = await response.blob()
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = fileName
+      document.body.appendChild(a)
+      a.click()
+      window.URL.revokeObjectURL(url)
+      document.body.removeChild(a)
+    } catch (error) {
+      console.error('Download failed:', error)
+    } finally {
+      setDownloading(null)
+    }
   }
 
   if (loading) {
@@ -121,12 +144,19 @@ export function FileList() {
               </TableCell>
               <TableCell className="text-right">
                 <div className="flex justify-end gap-2">
-                  <a href={`/api/file/download/${file.id}`} download>
-                    <Button variant="ghost" size="sm">
+                  <Button 
+                    variant="ghost" 
+                    size="sm"
+                    onClick={() => handleDownload(file.id, file.name)}
+                    disabled={downloading === file.id}
+                  >
+                    {downloading === file.id ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
                       <Download className="h-4 w-4" />
-                      <span className="sr-only">Download</span>
-                    </Button>
-                  </a>
+                    )}
+                    <span className="sr-only">Download</span>
+                  </Button>
                 </div>
               </TableCell>
             </TableRow>

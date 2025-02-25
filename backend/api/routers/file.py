@@ -31,7 +31,8 @@ async def upload_file(
         
         db_file = FileModel(
             name=file.filename,
-            path=s3_path
+            path=s3_path,
+            content_type=file.content_type
         )
         db.add(db_file)
         await db.commit()
@@ -79,7 +80,7 @@ async def download_file(file_id: int, db: AsyncSession = Depends(get_db)):
         file_obj = await s3_client.download_fileobj(file.path)
         return StreamingResponse(
             BytesIO(file_obj),
-            media_type="application/octet-stream",
+            media_type=file.content_type or "application/octet-stream",
             headers={
                 "Content-Disposition": f'attachment; filename="{file.name}"'
             }
