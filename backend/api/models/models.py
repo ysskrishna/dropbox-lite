@@ -15,6 +15,16 @@ class File(Timestamp, Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
-    path = Column(String, nullable=False)
+    path = Column(String, nullable=True)
     content_type = Column(String, nullable=True)
+    size = Column(Integer, nullable=True)
+    chunk_count = Column(Integer, nullable=True)
 
+class FileChunk(Timestamp, Base):
+    __tablename__ = "file_chunks"
+
+    id = Column(Integer, primary_key=True)
+    file_id = Column(Integer, ForeignKey("files.id"), nullable=False)
+    chunk_index = Column(Integer, nullable=False)
+    chunk_path = Column(String, nullable=False)
+    
