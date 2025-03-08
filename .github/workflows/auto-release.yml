@@ -1,0 +1,51 @@
+name: Automated Release Creation
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'  # Trigger on version tags
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Fetch all history for changelog generation
+
+      - name: Get version from tag
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Get Changelog Entry
+        id: changelog
+        run: |
+          # Extract the changelog content starting from the first ### section
+          CHANGELOG_CONTENT=$(awk '
+            /## \['"${VERSION}"'\]/ {p=1; next}
+            /## \[/ {p=0}
+            p && /^### / {found=1}
+            p && found {print}
+          ' CHANGELOG.md)
+          if [ -z "$CHANGELOG_CONTENT" ]; then
+            echo "Error: No changelog entry found for version ${VERSION}"
+            exit 1
+          fi
+          echo "CHANGELOG<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGELOG_CONTENT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+        env:
+          VERSION: ${{ steps.get_version.outputs.VERSION }}
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Release v${{ steps.get_version.outputs.VERSION }}
+          body: ${{ steps.changelog.outputs.CHANGELOG }}
+          draft: false
+          prerelease: false
+          token: ${{ secrets.GITHUB_TOKEN }} 
