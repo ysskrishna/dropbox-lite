@@ -65,6 +65,13 @@ https://github.com/user-attachments/assets/eadd4939-bbab-45e4-9b6a-960f772894f1
    - Password: `minioadminpassword`
 8. Swagger API Documentation will be available at `http://localhost:8000/docs`
 
+## Versioning and Changelog
+
+- **CHANGELOG.md**: Contains a chronologically ordered list of notable changes for each version of the project. See [CHANGELOG.md](CHANGELOG.md) for the full history of changes.
+- **RELEASES.md**: Documents our release pipeline process, including branch management, version tagging, and release creation procedures. See [RELEASES.md](RELEASES.md) for detailed release guidelines.
+
+### Release Tags
+All releases are tagged and available in the [GitHub Releases](https://github.com/ysskrishna/dropbox-lite/releases) section.
 
 ## License
 Copyright (c) 2025 Y. Siva Sai Krishna
