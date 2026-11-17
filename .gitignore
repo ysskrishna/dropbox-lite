@@ -1,1 +1,5 @@
 workspace/
+
+# Local secret files. Example files stay tracked.
+backend/api/.env
+backend/api/.env.local
