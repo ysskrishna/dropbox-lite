@@ -1,5 +1,7 @@
 # Dropbox - Lite
 
+[![License: AGPL-3.0](https://img.shields.io/github/license/ysskrishna/dropbox-lite)](https://github.com/ysskrishna/dropbox-lite/blob/main/LICENSE) [![GitHub release](https://img.shields.io/github/v/release/ysskrishna/dropbox-lite?label=release)](https://github.com/ysskrishna/dropbox-lite/releases) [![Author site](https://img.shields.io/badge/author-ysskrishna.space-informational)](https://ysskrishna.space)
+
 Dropbox-Lite is a modern, lightweight file storage and sharing solution that provides an intuitive interface for managing your files in the cloud. Built with a powerful tech stack combining Next.js for the frontend and FastAPI for the backend, this application offers a seamless file management experience.
 
 ## Key Features
@@ -73,7 +75,32 @@ https://github.com/user-attachments/assets/eadd4939-bbab-45e4-9b6a-960f772894f1
 ### Release Tags
 All releases are tagged and available in the [GitHub Releases](https://github.com/ysskrishna/dropbox-lite/releases) section.
 
-## License
-Copyright (c) 2025 Y. Siva Sai Krishna
+## Built and maintained by
 
-This project is licensed under the AGPL-3.0 License - see the LICENSE file for details.
+Dropbox - Lite is built and maintained by:
+
+| | Name | GitHub | Role |
+|---|------|--------|------|
+| <img src="https://github.com/ysskrishna.png?size=120" width="60" height="60" alt="Y. Siva Sai Krishna"> | **Y. Siva Sai Krishna** | [@ysskrishna](https://github.com/ysskrishna) | Creator |
+
+## Support
+
+If you find this project helpful:
+
+- ⭐ Star the repository
+- 🐛 [Report issues](https://github.com/ysskrishna/dropbox-lite/issues)
+- 🔀 Submit pull requests
+- 💝 [Sponsor on GitHub](https://github.com/sponsors/ysskrishna)
+
+## License
+
+AGPL-3.0 © [Y. Siva Sai Krishna](https://github.com/ysskrishna) — see [LICENSE](LICENSE) for details.
+
+---
+
+<p align="left">
+  <a href="https://github.com/ysskrishna">Author's GitHub</a> •
+  <a href="https://linkedin.com/in/ysskrishna">Author's LinkedIn</a> •
+  <a href="https://ysskrishna.space">Author's site</a> •
+  <a href="https://github.com/ysskrishna/dropbox-lite/issues">Report Issues</a>
+</p>

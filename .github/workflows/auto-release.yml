@@ -5,6 +5,13 @@ on:
     tags:
       - 'v*.*.*'  # Trigger on version tags
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
 jobs:
   create-release:
     runs-on: ubuntu-latest
@@ -13,8 +20,9 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
         with:
+          persist-credentials: false
           fetch-depth: 0  # Fetch all history for changelog generation
 
       - name: Get version from tag
@@ -42,7 +50,7 @@ jobs:
           VERSION: ${{ steps.get_version.outputs.VERSION }}
 
       - name: Create Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@8a0cd651e5b2365bd640854a3fa5dfc70e4875f3 # v3.0.4
         with:
           name: Release v${{ steps.get_version.outputs.VERSION }}
           body: ${{ steps.changelog.outputs.CHANGELOG }}
